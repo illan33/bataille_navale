@@ -66,10 +66,33 @@ def bateaux():
             protection += 1
     return cases
 
+def affichage():
+    for i in equipes:
+        print ("Affichages bateaux equipe 1")
+        input("Êtes vous prêt ? (Pas besoin de répondre) Protection contre la triche")
+        for h in range (4):
+            print("-", end = "")
+        for g in y:
+            print("|", end = "")
+            for e in x:
+                if cases[i,e,g] == "Rien":
+                    print("X",end = " ")
+                else :
+                    print("O", end = " ")
+            print( "|")
+        for h in range (4):
+            print("-", end = "")
+        protection = 0
+        while protection <= 20 : 
+            print(" ")
+            protection += 1
+
 if input("Voulez-vous changer les paramètres ? (OUI ou NON): ") == "OUI":
     bat = paramètres()
 cases = reset()
 cases = bateaux()
+affichage()
         
         
+
 
