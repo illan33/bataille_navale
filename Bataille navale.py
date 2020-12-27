@@ -23,21 +23,29 @@ def reset():
     print("Reset terminé")
     return cases
 
+def erreur_len(case_bats):
+    print ("Coordonnées invalides veuiller recommencer ",)
+    print (" ")
+    case_bats = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre): ")
+    return case_bats
+
 def erreur_cord(case_bats):
-    e=2
-    for e  in range(2,len(case_bats+1)):
-        while len(case_bats) >= 3:
-            while case_bats[0] not in x or case_bats[1] not in y:
-                print ("Coordonnées invalides veuiller recommencer ",)
-                print (" ")
-                case_bats = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre): ")
-            return case_bats
+    if len(case_bats)>=3 :
+       case_bats = erreur_len(case_bats)
+    while case_bats[0] not in x or case_bats[1] not in y:
+        print ("Coordonnées invalides veuiller recommencer ",)
+        print (" ")
+        case_bats = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre): ")
+        if len(case_bats)>=3 :
+            case_bats = erreur_len(case_bats)
+    return case_bats
         
 def bateaux():
     for e in equipes :
         print("Tour de",e)
         
         for h in range(1,1+bat):
+            print(" ")
             print("Bateau numéro :",h)
             case_bat = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre): ")
             case_bat = erreur_cord(case_bat)
@@ -64,3 +72,4 @@ cases = reset()
 cases = bateaux()
         
         
+
