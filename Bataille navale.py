@@ -1,18 +1,24 @@
-bat = 4
 y = ("1","2","3","4")
 x = ("a","b","c","d")
-equipes = ("eq1","eq2")
+equipes = ("équipe 1","équipe 2")
+tour = 0
+jeu = 0
+débug = False
 
 def paramètres():
-    bat = input("Nombre de bateaux ? : ")
-    
+    bat = input("Nombre de bateaux ? (De base 4) : ")
     while bat.isdigit() == False or  int(bat) > 16 or int(bat) < 1:
         print("L'entrée n'est pas un nombre  ou n'est pas valide veuiller recommencer")
         bat = input("Nombre de bateaux ? : ")
-        
     bat = int(bat)
     print("Le nombre de bateaux sera:",bat)
-    return bat
+    
+    if input("Mode Débug (OUI ou NON): ") == "OUI":
+        débug = True
+    else :
+        débug = False
+    lst_para = [bat,débug]
+    return lst_para
 
 def reset():
     cases = {}
@@ -30,19 +36,22 @@ def erreur_len(case_bats):
     return case_bats
 
 def erreur_cord(case_bats):
-    if len(case_bats)>=3 :
-       case_bats = erreur_len(case_bats)
+    if len(case_bats)>=3 or len(case_bats) == 0:
+        case_bats = erreur_len(case_bats)
+        
     while case_bats[0] not in x or case_bats[1] not in y:
         print ("Coordonnées invalides veuiller recommencer ",)
         print (" ")
         case_bats = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre): ")
+        
         if len(case_bats)>=3 :
             case_bats = erreur_len(case_bats)
     return case_bats
         
 def bateaux():
     for e in equipes :
-        print("Tour de",e)
+        print(" ")
+        print("Tour de l'",e)
         
         for h in range(1,1+bat):
             print(" ")
@@ -61,38 +70,112 @@ def bateaux():
                     print("Vous avez choisit les mêmes coordonnées qu'un autre bateau")
                     case_bat = erreur_cord(case_bat)
         protection = 0
-        while protection <= 20 : 
+        while protection <= protec_général : 
             print(" ")
             protection += 1
     return cases
 
-def affichage():
+def affichage_départ(protec):
     for i in equipes:
-        print ("Affichages bateaux equipe 1")
-        input("Êtes vous prêt ? (Pas besoin de répondre) Protection contre la triche")
-        for h in range (4):
+        print ("Affichages bateaux :", i )
+        if protec > 0 :
+            input("Êtes vous prêt ? (Pas besoin de répondre) Protection contre la triche")
+        
+        for h in range (9):
             print("-", end = "")
+        print("-")
+        
         for g in y:
             print("|", end = "")
+            
             for e in x:
                 if cases[i,e,g] == "Rien":
                     print("X",end = " ")
                 else :
                     print("O", end = " ")
             print( "|")
-        for h in range (4):
+        
+        for h in range (9):
             print("-", end = "")
+        print("-")
         protection = 0
-        while protection <= 20 : 
+        if protec > 0 :
+            input("Attente")
+        while protection <= protec : 
             print(" ")
             protection += 1
 
-if input("Voulez-vous changer les paramètres ? (OUI ou NON): ") == "OUI":
-    bat = paramètres()
-cases = reset()
-cases = bateaux()
-affichage()
-        
-        
+def tirs(equipe):
+    tir = input("Coordonnées du tir, Sous la forme x (lettre), y(nombre): ")
+    tir = erreur_cord(tir)
+    print (" Tir aux coordonées : ",tir)
+    tirx = tir[0]
+    tiry = tir[1]
+    
+    if cases[equipe,tirx,tiry] == "Bateau":
+        print(" ")
+        print("Coulé")
+        print(" ")
+        return 1
 
+    else :
+        print (" ")
+        print("Raté")
+        print(" ")
+        return 0
+        
+def bataille():
+    bat1 = 0
+    bat2 = 0
+    tour = 0
+    while tour == 0 and bat1 < bat and bat2 < bat :
+        print ("Tour équipe 1")
+        print(" ")
+        if tirs("équipe 2") == 1:
+            bat2+=1
+        else :
+            tour = 1
+        print("Nombre de bateau restant de l'équipe 2 :",bat-bat2)
+        while tour == 1 and bat1 < bat and bat2 < bat :
+            print( "Tour équipe 2")
+            print(" ")
+            if tirs("équipe 1") == 1 :
+                bat1+=1
+            else :
+                tour = 0
+        print("Nombre de bateau restant de l'équipe 1 :",bat-bat1)
 
+    if bat2 == bat :
+        input("Le joueur 1 a gagné")
+    else :
+        input("Le joueur 2 a gagné")
+    print(affichage_départ(0))
+    #if input("Voulez vous faire une nouvelle partie (OUI ou NON) : ") == "NON":
+        #return 1
+    
+def bases() :
+    if input("Voulez-vous changer les paramètres ? (OUI ou NON): ") == "OUI":
+        bat = paramètres()
+    else :
+        bat = 4
+        débug = False
+        
+while jeu == 0 :
+    if input("Voulez-vous changer les paramètres ? (OUI ou NON): ") == "OUI":
+        para = paramètres()
+        bat = para[0]
+        débug = para[1]
+    else :
+        bat = 4
+        débug = False
+        
+    if débug == False :
+       protec_général = 200
+    else :
+         protec_général = 0
+    cases = reset()
+    cases = bateaux()
+    affichage_départ(protec_général)
+    jeu = bataille()
+
+input("Merci d'avoir Joué")
