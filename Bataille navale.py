@@ -33,7 +33,7 @@ def _init_game():
 def erreur_len(case_bats):
     print ("Coordonnées invalides veuiller recommencer ",)
     print (" ")
-    case_bats = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre) Ex:a3 : ")
+    case_bats = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre) Ex: a3 : ")
     return case_bats
 
 def erreur_cord(case_bats):
@@ -43,7 +43,7 @@ def erreur_cord(case_bats):
     while case_bats[0] not in x or case_bats[1] not in y:
         print ("Coordonnées invalides veuiller recommencer ",)
         print (" ")
-        case_bats = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre) Ex:a3 : ")
+        case_bats = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre) Ex: a3 : ")
         
         if len(case_bats)>=3 :
             case_bats = erreur_len(case_bats)
@@ -57,7 +57,7 @@ def bateaux():
         for h in range(1,1+bat):
             print(" ")
             print("Bateau numéro :",h)
-            case_bat = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre) Ex:a3 : ")
+            case_bat = input("Coordonnées du bateau, Sous la forme x (lettre), y(nombre) Ex: a3 : ")
             case_bat = erreur_cord(case_bat)
             
             er = 0
@@ -108,6 +108,7 @@ def affichage_départ(protec):
 
 def affichage_attaque(equipe):
     print (f"Affichages carte de l' {equipe}" )
+    print ("/ = Rien 0 = Raté X = Coulé")
     for h in range (9):
         print("-", end = "")
     print("-")
