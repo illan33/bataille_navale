@@ -91,7 +91,7 @@ def affichage_départ(protec):
             
             for e in x:
                 if cases[i,e,g] == "Rien":
-                    print("X",end = " ")
+                    print("/",end = " ")
                 else :
                     print("O", end = " ")
             print( "|")
