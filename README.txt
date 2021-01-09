@@ -1,2 +1,2 @@
 Bataille navale python 
-Update 09/01/2021 Release 1.0
+Update 09/01/2021 Release v1.0
