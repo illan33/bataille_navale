@@ -26,9 +26,6 @@ def _init_game():
         for e in x:
             for g in y:
                 cases[i,e,g] = "Rien"
-    for i in equipes:
-        for e in x:
-            for g in y:
                 cases_attaques[i,e,g] = "Rien"
     print("Reset terminé")
     return cases
