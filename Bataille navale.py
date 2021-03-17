@@ -37,7 +37,7 @@ def erreur_len(case_bats):
     return case_bats
 
 def erreur_cord(case_bats):
-    if len(case_bats)>=3 or len(case_bats) == 0:
+    if len(case_bats)>=3 or len(case_bats) <= 1:
         case_bats = erreur_len(case_bats)
         
     while case_bats[0] not in x or case_bats[1] not in y:
